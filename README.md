@@ -1,4 +1,6 @@
-# To run this demo, we should follow this steps
+**This is a small project to implement search using Spring Boot, Elastic Search and Java Jest.
+
+# To run this demo, follow the below steps
 
 Prerequisite-1: Install Java and set JAVA_HOME and PATH variables.
 
