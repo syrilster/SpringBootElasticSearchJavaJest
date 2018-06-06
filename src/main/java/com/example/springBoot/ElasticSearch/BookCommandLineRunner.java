@@ -38,6 +38,10 @@ public class BookCommandLineRunner implements CommandLineRunner {
         BookESDirectory bookESDirectory = new BookESDirectory();
         bookESDirectory.init();
         bookESDirectory.index(bookListFromDB.get(0));
-        bookESDirectory.search("Elasticsearch Basics");
+        bookESDirectory.index(bookListFromDB.get(1));
+        List<Book> bookOne = bookESDirectory.search("Elasticsearch Basics");
+        System.out.println("Book One details from ES --> " + bookOne.stream().findFirst().toString());
+        List<Book> bookTwo = bookESDirectory.search("Homo Sapiens");
+        System.out.println("Book Two details from ES --> " + bookTwo.stream().findFirst().toString());
     }
 }
