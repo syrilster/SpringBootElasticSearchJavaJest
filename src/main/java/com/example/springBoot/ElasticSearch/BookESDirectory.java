@@ -19,12 +19,11 @@ import java.util.List;
 public class BookESDirectory extends ElasticSearchClient {
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-    protected static final String DEFAULT_IP_ADDRESS = "http://localhost:11200";
     public static final String DEFAULT_INDEX = "book";
     public static final String DEFAULT_TYPE = "general";
 
     public BookESDirectory() {
-        super(DEFAULT_IP_ADDRESS, DEFAULT_INDEX, DEFAULT_TYPE);
+        super(DEFAULT_INDEX, DEFAULT_TYPE);
     }
 
     public boolean index(Book book) throws Exception {

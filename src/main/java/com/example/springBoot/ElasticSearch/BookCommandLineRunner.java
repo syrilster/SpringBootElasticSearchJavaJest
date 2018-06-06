@@ -22,6 +22,8 @@ public class BookCommandLineRunner implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         List<Book> bookList = new ArrayList<>();
+        BookESDirectory bookESDirectory = new BookESDirectory();
+        bookESDirectory.init();
 
         bookList.add(new Book("Elasticsearch Basics", "Syril Sadasivan", new Date()));
         bookList.add(new Book("Homo Sapiens", "yuval noah harari", new Date("21-MAR-2017")));
@@ -31,14 +33,9 @@ public class BookCommandLineRunner implements CommandLineRunner {
 
         for (Book book : bookList) {
             bookRepository.save(book);
+            bookESDirectory.index(book);
         }
 
-        List<Book> bookListFromDB = bookRepository.findAll();
-
-        BookESDirectory bookESDirectory = new BookESDirectory();
-        bookESDirectory.init();
-        bookESDirectory.index(bookListFromDB.get(0));
-        bookESDirectory.index(bookListFromDB.get(1));
         List<Book> bookOne = bookESDirectory.search("Elasticsearch Basics");
         System.out.println("Book One details from ES --> " + bookOne.stream().findFirst().toString());
         List<Book> bookTwo = bookESDirectory.search("Homo Sapiens");

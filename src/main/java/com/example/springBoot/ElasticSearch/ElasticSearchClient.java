@@ -18,14 +18,15 @@ abstract class ElasticSearchClient {
 
     private static JestClientFactory factory;
     private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    protected static final String DEFAULT_IP_ADDRESS = "http://localhost:9200";
     private JestClient client;
 
     private String ipAddress;
     private String index;
     private String type;
 
-    public ElasticSearchClient(String ipAddress, String index, String type) {
-        this.ipAddress = ipAddress;
+    public ElasticSearchClient(String index, String type) {
+        this.ipAddress = DEFAULT_IP_ADDRESS;
         this.index = index;
         this.type = type;
     }
@@ -34,7 +35,7 @@ abstract class ElasticSearchClient {
         if (factory == null) {
             factory = new JestClientFactory();
             factory.setHttpClientConfig(new HttpClientConfig
-                    .Builder("http://localhost:9200")
+                    .Builder(getIpAddress())
                     .multiThreaded(true)
                     //Per default this implementation will create no more than 2 concurrent connections per given route
                     .defaultMaxTotalConnectionPerRoute(2)
@@ -86,9 +87,9 @@ abstract class ElasticSearchClient {
     }
 
     public String pretty(String jsonStr) {
-        JsonParser jp = new JsonParser();
-        JsonElement je = jp.parse(jsonStr);
-        return gson.toJson(je);
+        JsonParser jsonParser = new JsonParser();
+        JsonElement jsonElement = jsonParser.parse(jsonStr);
+        return gson.toJson(jsonElement);
     }
 
     public String getIpAddress() {
